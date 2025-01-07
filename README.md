@@ -37,12 +37,16 @@ The demonstration utilizes select components from MalwareTech's AppContainerSand
 ## Repository Architecture
 
 ├── driver/             # Kernel-mode implementation
+
 └── tests/             # Validation suite
 
 ## Build Requirements
 Prerequisites
+
 Microsoft Visual Studio 2022 Development Environment
+
 Windows Driver Development Kit (WDK)
+
 Windows Software Development Kit (SDK) 10.0.22621.0 or subsequent releases
 
 ## Attribution
@@ -53,7 +57,9 @@ This implementation is distributed under the GNU General Public License v3.0. Re
 
 ## Implementation Notes
 Independent implementation, not affiliated with Microsoft Corporation
+
 Implementation deployed at operator's discretion
+
 Not recommended for production environment deployment
 
 ## Community Participation
