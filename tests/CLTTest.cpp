@@ -308,11 +308,6 @@ NTSTATUS NTAPI MyNtCreateLowboxToken(
     {
         return 0; 
     }
-
-    //printf("lowbox!\n");
-
-    //return NtCreateLowboxToken(TokenHandle, ExistingTokenHandle, DesiredAccess, ObjectAttributes, PackageSid, CapabilityCount, Capabilities, HandleCount, Handles);
-
 }
 
 BOOL InstallHook()
@@ -588,7 +583,10 @@ BOOL GrantNamedObjectAccess(PSID appcontainer_sid, CHAR* object_name, SE_OBJECT_
 }
 BOOL LoadSymbol()
 {
-    const char* symPath = "c:\\syms";
+    //replace with your symbol path
+    //you'd better have the latest dbghelp.dll placed with this exe
+    
+    const char* symPath = "c:\\Symbols";
     DWORD64 address;
     PVOID kernelbase = GetKernelBase();
     LOWBOXTOKEN_PARAMS tp; 
@@ -655,8 +653,7 @@ int main()
 
 
 
-    DeleteFileA("c:\\users\\test\\desktop\\allowed_test.txt");
-    CHAR Name[] = "c:\\windows\\system32\\notepad.exe";
+     CHAR Name[] = "c:\\windows\\system32\\notepad.exe";
     
     RunExecutableInContainer(Name);
 
