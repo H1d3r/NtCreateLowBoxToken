@@ -25,9 +25,13 @@ Extensively validated across contemporary Windows NT-based operating systems:
 The repository incorporates a comprehensive demonstration application that:
 
 Facilitates kernel-mode driver installation and initialization
+
 Implements system call interception mechanisms
+
 Demonstrates programmatic AppContainer security context establishment
+
 Executes Notepad.exe within an AppContainer security boundary
+
 The demonstration utilizes select components from MalwareTech's AppContainerSandbox implementation
 
 ## Repository Architecture
