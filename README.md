@@ -18,7 +18,7 @@ This repository presents an independently developed reproduction of the `NtCreat
 
 Extensively validated across contemporary Windows NT-based operating systems:
 - Windows 11 Version 24H2 (10.0.26100.2605)
-- Windows 10 Version 23H2 (10.0.22631.4602)
+- Windows 11 Version 23H2 (10.0.22631.4602)
 - Windows 10 Version 22H2 (10.0.19045.5247)
 
 ## Demonstration Implementation
