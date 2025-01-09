@@ -36,7 +36,6 @@ PSID SeLpacImeCapabilitySid = NULL;
 PSID SeLpacPackageManagerOperationCapabilitySid = NULL;
 PSID SeLpacDeviceAccessCapabilitySid = NULL;
 
-
 const PSID* SeLpacCapabilitySids[] = {
     &SeLpacAppExperienceCapabilitySid,
     &SeLpacComCapabilitySid,
