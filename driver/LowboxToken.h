@@ -30,8 +30,6 @@ typedef NTSTATUS(*PSEP_DUPLICATE_TOKEN)(
     BOOLEAN SkipNonInheritableSecurityAttributes,
     PVOID* DuplicateToken
     );
-typedef NTSTATUS(*PSEP_APPEND_ACE_TO_TOKEN_OBJECT_ACL)(PVOID Token, ACCESS_MASK Access, PSID Sid);
-typedef NTSTATUS(*PSEP_SET_PROCESS_TRUST_LABEL_ACE_FOR_TOKEN)(PVOID Token);
 
 typedef struct SYSTEM_SYMBOLS_PARAMS {
     PVOID LowboxSessionMapLock;
@@ -43,49 +41,6 @@ typedef struct SYSTEM_SYMBOLS_PARAMS {
      PSEP_DUPLICATE_TOKEN SepDuplicateToken;
 }SYSTEM_SYMBOLS_PARAMS , *PSYSTEM_SYMBOLS_PARAMS;
 
-
-
-
-FORCEINLINE
-VOID
-ProbeForReadSmallStructure(
-    IN PVOID Address,
-    IN SIZE_T Size,
-    IN ULONG Alignment
-)
-
-{
-    if ((Size == 0) || (Size >= 0x10000)) {
-
-        ProbeForRead(Address, Size, Alignment);
-
-    }
-    else {
-        if (((ULONG_PTR)Address & (Alignment - 1)) != 0) {
-            ExRaiseDatatypeMisalignment();
-        }
-
-        if ((PUCHAR)Address >= (UCHAR* const)MM_USER_PROBE_ADDRESS) {
-            Address = (UCHAR* const)MM_USER_PROBE_ADDRESS;
-        }
-
-        _ReadWriteBarrier();
-        *(volatile UCHAR*)Address;
-    }
-}
-
-
-FORCEINLINE
-LARGE_INTEGER
-ProbeAndReadLargeInteger(LARGE_INTEGER* Address)
-{
-    if (Address >= (LARGE_INTEGER* const)MM_USER_PROBE_ADDRESS) {
-        Address = (LARGE_INTEGER* const)MM_USER_PROBE_ADDRESS;
-    }
-
-    _ReadWriteBarrier();
-    return *((volatile LARGE_INTEGER*)Address);
-}
 
 FORCEINLINE
 VOID
@@ -99,56 +54,6 @@ ProbeForWriteHandle( PHANDLE Address)
     *((volatile HANDLE*)Address) = *Address;
     return;
 }
-
-
-FORCEINLINE
-VOID
-ProbeForWriteSmallStructure(
-    IN PVOID Address,
-    IN SIZE_T Size,
-    IN ULONG Alignment)
-{
-    if ((Size == 0) || (Size >= 0x1000)) {
-
-        ProbeForWrite(Address, Size, Alignment);
-
-    }
-    else {
-        if (((ULONG_PTR)(Address) & (Alignment - 1)) != 0) {
-            ExRaiseDatatypeMisalignment();
-        }
-
-        if ((ULONG_PTR)(Address) >= (ULONG_PTR)MM_USER_PROBE_ADDRESS) {
-            Address = (UCHAR* const)MM_USER_PROBE_ADDRESS;
-        }
-
-        ((volatile UCHAR*)(Address))[0] = ((volatile UCHAR*)(Address))[0];
-        ((volatile UCHAR*)(Address))[Size - 1] = ((volatile UCHAR*)(Address))[Size - 1];
-
-    }
-}
-
-FORCEINLINE
-VOID
-ProbeAndReadStructureWorker(
-     PVOID Destination,
-    CONST VOID* Source,
-   SIZE_T Size
-)
-
-{
-    if (Source >= (VOID* const)MM_USER_PROBE_ADDRESS) {
-        Source = (VOID* const)MM_USER_PROBE_ADDRESS;
-    }
-
-    memcpy(Destination, Source, Size);
-    _ReadWriteBarrier();
-    return;
-}
-
-#define ProbeAndReadStructureEx(Dst, Src, STRUCTURE)                         \
-    ProbeAndReadStructureWorker(&(Dst), Src, sizeof(STRUCTURE))
-
 
 
 FORCEINLINE
