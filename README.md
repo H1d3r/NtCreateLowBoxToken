@@ -58,7 +58,7 @@ This implementation is distributed under the GNU General Public License v3.0. Re
 ## Implementation Notes
 Independent implementation, not affiliated with Microsoft Corporation
 
-Implementation deployed at operator's discretion
+Implementation deployed at operator's discretion.
 
 Not recommended for production environment deployment
 
